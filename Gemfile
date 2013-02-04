@@ -5,7 +5,6 @@ gem 'rails', '3.2.11'
 gem 'sqlite3'
 
 gem 'jquery-rails'
-gem "jasmine"
 
 gem "haml-rails"
 
@@ -19,4 +18,5 @@ end
 
 group :development do
   gem "erb2haml"
+  gem "jasmine"
 end

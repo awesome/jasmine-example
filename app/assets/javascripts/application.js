@@ -14,3 +14,8 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+$(function() {
+  $("#username").validate({presence: true, length: 3});
+  $("#email").validate({presence: true, email: true});
+});

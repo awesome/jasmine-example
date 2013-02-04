@@ -1,2 +1,16 @@
 %h1 Welcome
 
+#users
+
+#signup
+  = form_tag "" do |f|
+    .control-group
+      .controls
+        = text_field_tag :username, "", placeholder: "Username"
+    .control-group
+      .controls
+        = text_field_tag :email, "", placeholder: "Email"
+
+    %div
+      = submit_tag "Sign Up", class: "btn btn-success"
+

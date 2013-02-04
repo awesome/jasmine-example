@@ -10,4 +10,4 @@
     $ rails s
     $ rake jasmine
 
-Then open your browser at http://localhost:3000 for check application and http://localhost:8888 for runing specs.
+Then open your browser at `http://localhost:3000` for check application and `http://localhost:8888` for runing specs.

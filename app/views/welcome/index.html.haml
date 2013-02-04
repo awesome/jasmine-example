@@ -10,6 +10,12 @@
     .control-group
       .controls
         = text_field_tag :email, "", placeholder: "Email"
+    .control-group
+      .controls
+        = password_field_tag :password, "", placeholder: "Password"
+    .control-group
+      .controls
+        = password_field_tag :password_confirmation, "", placeholder: "Password confirmation"
 
     %div
       = submit_tag "Sign Up", class: "btn btn-success"

@@ -18,4 +18,9 @@
 $(function() {
   $("#username").validate({presence: true, length: 3});
   $("#email").validate({presence: true, email: true});
+  $("#password").validate({presence: true, length: 6});
+  $("#password_confirmation").validate({
+    presence: true,
+    compare: "#password"
+  });
 });

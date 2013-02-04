@@ -3,6 +3,7 @@ function Validator() {
   this.cannotBeEmptyError = "Cannot be empty";
   this.isTooShortError = "Is too short";
   this.invalidEmailFormat = "Invalid email format";
+  this.doNotMatch = "Do not match";
   this.errors = [];
   this.emailPattern = /^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/;
 }
@@ -27,6 +28,11 @@ Validator.prototype.validate = function(value, options) {
     this.errors.push(this.invalidEmailFormat);
   }
 
+  if (options.compared_with && value != options.compared_with) {
+    isValid = false;
+    this.errors.push(this.doNotMatch);
+  }
+
   return isValid;
 }
 
@@ -44,6 +50,9 @@ Validator.prototype.errorMessages = function() {
         var validator = new Validator();
         $group.removeClass("error");
         $wrapper.children("span.help-inline").remove();
+        if (options.compare) {
+          options.compared_with = $(options.compare).val();
+        }
         if (!validator.validate($this.val(), options)) {
           $group.addClass("error");
           message = validator.errorMessages().join(", ");

@@ -79,6 +79,29 @@ describe("Validator", function() {
         });
       });
     });
+
+    describe("when validate comparison", function() {
+      describe("when two values are match", function() {
+        it("is valid", function() {
+          expect(validator.validate("pass", {compared_with: "pass"})).toBeTruthy();
+        });
+        it("error messages is empty", function() {
+          validator.validate("pass", { compared_with: "pass" });
+          expect(validator.errorMessages()).toEqual([]);
+        });
+      });
+
+      describe("when two values don't match", function() {
+        it("is not valid", function() {
+          expect(validator.validate("pass", {compared_with: "1234"})).toBeFalsy();
+        });
+
+        it("error messages contain Do not match", function() {
+          validator.validate("pass", {compared_with: "1234"});
+          expect(validator.errorMessages()).toEqual(["Do not match"]);
+        });
+      });
+    });
   });
 
   describe("validates field when field loses focus", function() {
@@ -116,6 +139,49 @@ describe("Validator", function() {
       });
       it("span contains text Is too short", function() {
         expect($("span.help-inline")).toHaveText(/Invalid email format/);
+      });
+    });
+  });
+
+  describe("validates password confirmation on loses focus", function() {
+    beforeEach(function() {
+      loadFixtures("passwords.html");
+    });
+
+    describe("when passwords match", function() {
+      beforeEach(function() {
+        var $password = $("#password");
+        var $confirmation = $("#password_confirmation");
+        $confirmation.validate({presence: true, compare: "#password"});
+        $password.val("123123");
+        $confirmation.val("123123");
+        $confirmation.blur();
+      });
+      it("control-group hasn't error class", function() {
+        expect($("#confirmation_group")).not.toHaveClass("error");
+      });
+      it("don't contans span hint", function() {
+        expect($("#confirmation_controls")).not.toContain("span.help-inline");
+      });
+    });
+
+    describe("when passwords don't match", function() {
+      beforeEach(function() {
+        var $password = $("#password");
+        var $confirmation = $("#password_confirmation");
+        $confirmation.validate({presence: true, compare: "#password"});
+        $password.val("123123");
+        $confirmation.val("123");
+        $confirmation.blur();
+      });
+      it("control-group has error class", function() {
+        expect($("#confirmation_group")).toHaveClass("error");
+      });
+      it("contans span hint", function() {
+        expect($("#confirmation_controls")).toContain("span.help-inline");
+      });
+      it("span contains text Is too short", function() {
+        expect($("#confirmation_controls span.help-inline")).toHaveText(/Do not match/);
       });
     });
   });
